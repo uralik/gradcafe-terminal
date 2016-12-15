@@ -1,4 +1,4 @@
-# gradcafe_paranoid
+# gradcafe-terminal
 
 # -----------------------------------------------------------------------------
 
@@ -95,7 +95,7 @@ def yellow(printStr):
 
 # Command-line argument related code
 
-description = "gradcafe-term"
+description = "gradcafe-terminal"
 parser = argparse.ArgumentParser(description = description)
 parser.add_argument("-d", "--days", type = int,
                     help = "Maximum number of past days (from today) " 

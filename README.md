@@ -1,1 +1,1 @@
-# gradcafe-paranoid
+# gradcafe-terminal
