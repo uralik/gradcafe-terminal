@@ -22,11 +22,16 @@ import re
 # Parameters
 
 DAYS_TO_FETCH = 10 # Fetch results from the past "N" days
+UNIV_LIST = ["University of Pennsylvania", "UPenn"]
 BASE_URL = "http://thegradcafe.com/survey/index.php?q="
 URL_SUFFIX = "&t=a&o=&pp=250"
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) "
                          "AppleWebKit/602.3.12 (KHTML, like Gecko) Version"
                          "/10.0.2 Safari/602.3.12"}
+
+# Truncation lengths (number of characters to display table properly) for:
+# (0) Univ. name; (1) Program; (2) Decision, Date; (3) Date Added; (4) Notes;
+TRUNCATION_LENGTHS = [30, 40, 35, 11, 35]
 
 # -----------------------------------------------------------------------------
 
@@ -73,8 +78,8 @@ init()
 
 # Methods for colors
 
-def white(printStr):
-    return colored(printStr, "white")
+def header(printStr):
+    return colored(printStr, "blue", attrs=["bold"])
 
 def green(printStr):
     return colored(printStr, "green")
@@ -124,19 +129,34 @@ else:
     pattern = re.compile('[\W_]+')
     parenPattern = re.compile('\([^)]*\)')
     filteredTableList = [[truncate(pattern.sub(' ', 
-                                    parenPattern.sub('', item[0])).strip(), 30), 
-                          truncate(pattern.sub(' ', item[1]).strip(), 40), 
-                          truncate(pattern.sub(' ', item[2]).strip(), 35), 
-                          truncate(pattern.sub(' ', item[4]).strip(), 11), 
-                          truncate(pattern.sub(' ', item[5]).strip(), 35)] 
+                                    parenPattern.sub('', item[0])).strip(), 
+                                                        TRUNCATION_LENGTHS[0]), 
+                          truncate(pattern.sub(' ', item[1]).strip(), 
+                                                        TRUNCATION_LENGTHS[1]), 
+                          truncate(pattern.sub(' ', item[2]).strip(), 
+                                                        TRUNCATION_LENGTHS[2]), 
+                          truncate(pattern.sub(' ', item[4]).strip(), 
+                                                        TRUNCATION_LENGTHS[3]), 
+                          truncate(pattern.sub(' ', item[5]).strip(), 
+                                                        TRUNCATION_LENGTHS[4])] 
                             for item in tableList[1:] 
                                 if (datetime.now() + 
                                     relativedelta(days = -1 * DAYS_TO_FETCH) 
                                                             <= parse(item[4]))]
     
+    for ii in range(len(filteredTableList)):
+        if "accepted" in filteredTableList[ii][2].lower():
+            for jj in range(len(filteredTableList[ii])):
+                filteredTableList[ii][jj] = green(filteredTableList[ii][jj])
+        elif "rejected" in filteredTableList[ii][2].lower():
+            for jj in range(len(filteredTableList[ii])):
+                filteredTableList[ii][jj] = red(filteredTableList[ii][jj])
+            
+    
     print(tabulate(filteredTableList, 
-                   headers = [tableList[0][0], tableList[0][1], tableList[0][2], 
-                              tableList[0][4], tableList[0][5]], 
+                   headers = [header(tableList[0][0]), header(tableList[0][1]), 
+                              header(tableList[0][2]), header(tableList[0][4]), 
+                              header(tableList[0][5])], 
                    tablefmt="fancy_grid"))
 
 # -----------------------------------------------------------------------------
