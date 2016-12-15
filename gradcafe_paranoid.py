@@ -20,7 +20,7 @@ loadingStrings = ["[=         ]", "[ =        ]", "[  =       ]",
                   "[         =]", "[        = ]", "[       =  ]", 
                   "[      =   ]", "[     =    ]", "[    =     ]", 
                   "[   =      ]", "[  =       ]", "[ =        ]"]
-clearString = "            "
+clearString = "[==========]"
 
 def loadingAnimation():
     for currentPrint in itertools.cycle(loadingStrings):
@@ -40,8 +40,9 @@ def startLoadingAnimation():
     loadingAnimationThread.start()
     
 def stopLoadingAnimation():
-    global isAnimationRunning
+    global isAnimationRunning, loadingAnimationThread
     isAnimationRunning = False
+    loadingAnimationThread.join()
 
 # -----------------------------------------------------------------------------
 
@@ -58,12 +59,22 @@ def green(printStr):
 
 def red(printStr):
     return colored(printStr, "red")
+    
+def yellow(printStr):
+    return colored(printStr, "yellow")
 
 # -----------------------------------------------------------------------------
 
+# Main body
+
+print(yellow("Fetching details ..."))
+sys.stdout.flush()
 startLoadingAnimation()
-time.sleep(10)
+
+
+
 stopLoadingAnimation()
+print(green("\nDone."))
 
 # -----------------------------------------------------------------------------
 
