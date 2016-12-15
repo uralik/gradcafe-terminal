@@ -1,1 +1,1 @@
-# gradcafe-latest
+# gradcafe-paranoid
