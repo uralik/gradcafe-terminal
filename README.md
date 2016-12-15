@@ -16,11 +16,11 @@ The following optional command-line arguments are supported.
 
 Usage: `gradcafe_terminal.py [-h] [-d DAYS]`  
 
-Optional arguments:
-`-h, --help`: Show this help message and exit
+Optional arguments:  
+`-h, --help`: Show the help message and exit.  
 `-d DAYS, --days DAYS`: Maximum number of past days (from today) for which to fetch results. The default value is 7 days (1 week). Irrespective of the value chosen, a maximum of 250 results can be displayed.
 
 ## Screenshot
 <div align="center">
 	<img src="screenshots/1.png" alt="Screenshot of gradcafe-terminal.">
-</div><br>
+</div>
