@@ -22,7 +22,7 @@ import re
 # Parameters
 
 DAYS_TO_FETCH = 10 # Fetch results from the past "N" days
-UNIV_LIST = ["University of Pennsylvania", "UPenn"]
+UNIV_LIST = ["University of California San Diego", "UC San Diego", "UCSD"]
 BASE_URL = "http://thegradcafe.com/survey/index.php?q="
 URL_SUFFIX = "&t=a&o=&pp=250"
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_2) "
