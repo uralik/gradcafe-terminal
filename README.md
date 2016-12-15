@@ -23,4 +23,8 @@ Optional arguments:
 ## Screenshot
 <div align="center">
 	<img src="screenshots/1.png" alt="Screenshot of gradcafe-terminal.">
+</div> <br>
+
+<div align="center">
+	<img src="screenshots/2.png" alt="Screenshot of gradcafe-terminal.">
 </div>
