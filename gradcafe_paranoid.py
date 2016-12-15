@@ -1,11 +1,24 @@
 # gradcafe_paranoid
 
-from termcolor import colored
+# -----------------------------------------------------------------------------
+
 from colorama import init, deinit
+from bs4 import BeautifulSoup
+from termcolor import colored
 import itertools
 import threading
+import requests
+import urllib
 import time
 import sys
+
+# -----------------------------------------------------------------------------
+
+# Parameters
+
+N = 10
+UNIV_LIST = []
+BASE_URL = "http://thegradcafe.com/survey/index.php?q="
 
 # -----------------------------------------------------------------------------
 
@@ -65,16 +78,24 @@ def yellow(printStr):
 
 # -----------------------------------------------------------------------------
 
+# Query a link
+def getResponse(query):
+    print(yellow("Fetching details ..."))
+    sys.stdout.flush()
+    startLoadingAnimation()
+    response = requests.get(query)
+    stopLoadingAnimation()
+    print(green("\nDone."))
+    return response.content
+
+# -----------------------------------------------------------------------------
+
 # Main body
 
-print(yellow("Fetching details ..."))
-sys.stdout.flush()
-startLoadingAnimation()
+params = '|'.join("\"{0}\"".format(item) for item in UNIV_LIST)
+query = BASE_URL + urllib.quote_plus("(" + params + ")")
+response = getResponse(query);
 
-
-
-stopLoadingAnimation()
-print(green("\nDone."))
 
 # -----------------------------------------------------------------------------
 
