@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 from termcolor import colored
 import itertools
 import threading
+import argparse
 import requests
 import urllib
 import time
@@ -89,6 +90,28 @@ def red(printStr):
     
 def yellow(printStr):
     return colored(printStr, "yellow")
+
+# -----------------------------------------------------------------------------
+
+# Command-line argument related code
+
+description = "gradcafe-term"
+parser = argparse.ArgumentParser(description = description)
+parser.add_argument("-d", "--days", type = int,
+                    help = "Maximum number of past days (from today) " 
+                           "for which to fetch results. " 
+                           "The default value is 7 days (1 week). " 
+                           "Irrespective of the value chosen, a maximum of 250 "
+                           "results can be displayed.")
+
+args = parser.parse_args()
+if args.days is not None:
+    if args.days >= 1:
+        DAYS_TO_FETCH = args.days
+    else:
+        print(red("Illegal value for number of days."))
+        print("Parameter \"--days\" should be a positive integer.")
+        sys.exit()
 
 # -----------------------------------------------------------------------------
 
